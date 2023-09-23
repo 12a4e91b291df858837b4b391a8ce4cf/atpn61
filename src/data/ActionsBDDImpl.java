@@ -45,6 +45,11 @@ public class ActionsBDDImpl implements ActionsBDD {
         }
     }
 
+    @Override
+    public void flushDb() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(Constantes.requeteFlushDb);
+    }
     /**
      * Récupère tous les programmeurs.sql à partir de la DB, puis les stocke dans l'ArrayList "ListeProgrammeurs".
      * @throws SQLException Si une exception SQL est levée.
@@ -70,25 +75,23 @@ public class ActionsBDDImpl implements ActionsBDD {
         System.out.println(listeDeveloppeurs);
     }
 
+
     @Override
-    public void getProgrammerById(int id) throws SQLException {
+    public boolean getProgrammerById(int id) throws SQLException {
         String query = Constantes.requeteDeSelectionDesProgrammeurs + " WHERE ID = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, id);
         ResultSet rs = pstmt.executeQuery();
-
         if(rs.next()) {
             int devId = rs.getInt("ID");
             for(Developpeur d : listeDeveloppeurs) {
                 if(d.getId() == devId) {
                     System.out.println(d);
-                    return;
+                    return true;
                 }
             }
-        } else {
-            System.out.println("Aucun développeur trouvé avec l'ID: " + id);
         }
-        System.out.println(rs.getInt("ID"));
+        return false;
     }
 
 }

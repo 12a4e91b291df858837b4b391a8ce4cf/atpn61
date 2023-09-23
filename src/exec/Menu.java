@@ -12,6 +12,7 @@ public class Menu extends ActionsBDDImpl {
 
     private void dbConnectionAndInitialization() throws SQLException {
         super.openConnection();
+        super.flushDb();
         super.createProgrammers();
     }
     public void printMenu() throws SQLException {
@@ -28,10 +29,11 @@ public class Menu extends ActionsBDDImpl {
                     "4. Ajouter un programmeur" + "\n\n" +
                     "5. Modifier le salaire" + "\n\n" +
                     "6. Quitter le programme" + "\n\n" +
+                    "7. Cette touche est réservée pour retourner sur le menu principal" + "\n\n" +
                     "Quel est votre choix ? : ");
 
             choice = sc.nextInt();
-            validInput = true;  // On suppose que l'entrée est valide au départ
+            validInput = true;
 
             switch(choice) {
                 case 1:
@@ -50,6 +52,7 @@ public class Menu extends ActionsBDDImpl {
                     break;
                 case 6:
                     choiceSix();
+
                 default:
                     System.out.println("ERREUR! Veuillez saisir un nombre entre 1 et 6");
                     validInput = false;
@@ -58,17 +61,36 @@ public class Menu extends ActionsBDDImpl {
         } while(!validInput);
 
     }
-
     private void choiceOne() throws SQLException {
         super.getProgrammers();
+        if (returnToMainMenu())
+            printMenu();
     }
 
     private void choiceTwo(int choice) throws SQLException {
-        super.getProgrammerById(choice);
+        boolean continueAskingValidId = true;
+
+        while(continueAskingValidId) {
+            if(super.getProgrammerById(choice)) {
+                continueAskingValidId = false;
+            } else {
+                System.out.println("ID INVALIDE. Veuillez réessayer : ");
+                choice = sc.nextInt();
+            }
+        }
+
+        if (returnToMainMenu())
+            printMenu();
     }
 
     private void choiceSix() {
         System.exit(0);
+    }
+
+    private boolean returnToMainMenu() {
+        System.out.println("Appuyez sur 7 pour revenir au menu principal ou sur n'importe quelle autre touche pour continuer.");
+        int input = sc.nextInt();
+        return input == 7;
     }
 
     /*

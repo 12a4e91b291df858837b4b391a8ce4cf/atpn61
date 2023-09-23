@@ -30,5 +30,6 @@ public class Constantes {
 
     public static final String requeteDeSelectionDesProgrammeurs = "Select * FROM PROGRAMMEUR";
 
+    public static final String requeteFlushDb = "TRUNCATE TABLE PROGRAMMEUR";
 
 }

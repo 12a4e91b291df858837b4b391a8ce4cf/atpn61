@@ -29,6 +29,14 @@ public class Developpeur {
     public String toString() {
         return "Id : " + this.id + " \nNom : " + this.nom + " \nPrenom : " + this.prenom + " \nAdresse : " + this.adresse +
                 "\nResponsable : " + this.responsable + "\nHobby : " + this.hobby + " \naNaissance : " + this.aNaissance
-                + " \nSalaire : " + this.salaire + " \nPrime : " + this.prime +"\n";
+                + " \nSalaire : " + this.salaire + " \nPrime : " + this.prime + "\n";
+    }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public int getId() {
+        return this.id;
     }
 }

@@ -8,6 +8,69 @@ import java.util.Scanner;
 import utils.Constantes;
 
 public class Menu extends ActionsBDDImpl {
+    private Scanner sc = new Scanner(System.in);
+
+    private void dbConnectionAndInitialization() throws SQLException {
+        super.openConnection();
+        super.createProgrammers();
+    }
+    public void printMenu() throws SQLException {
+        dbConnectionAndInitialization();
+
+        int choice;
+        boolean validInput;
+
+        do {
+            System.out.println("<<<<<<<<<<   MENU   >>>>>>>>>>" + "\n\n" +
+                    "1. Afficher tous les programmeurs" + "\n\n" +
+                    "2. Afficher un programmeur" + "\n\n" +
+                    "3. Supprimer un programmeur" + "\n\n" +
+                    "4. Ajouter un programmeur" + "\n\n" +
+                    "5. Modifier le salaire" + "\n\n" +
+                    "6. Quitter le programme" + "\n\n" +
+                    "Quel est votre choix ? : ");
+
+            choice = sc.nextInt();
+            validInput = true;  // On suppose que l'entrée est valide au départ
+
+            switch(choice) {
+                case 1:
+                    choiceOne();
+                    break;
+                case 2:
+                    System.out.println("Id du programmeur à afficher");
+                    int idChoice = sc.nextInt();
+                    choiceTwo(idChoice);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    choiceSix();
+                default:
+                    System.out.println("ERREUR! Veuillez saisir un nombre entre 1 et 6");
+                    validInput = false;
+                    break;
+            }
+        } while(!validInput);
+
+    }
+
+    private void choiceOne() throws SQLException {
+        super.getProgrammers();
+    }
+
+    private void choiceTwo(int choice) throws SQLException {
+        super.getProgrammerById(choice);
+    }
+
+    private void choiceSix() {
+        System.exit(0);
+    }
+
     /*
     private static ArrayList<Developpeur> listeDeveloppeurs = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);
@@ -49,4 +112,5 @@ public class Menu extends ActionsBDDImpl {
         }
     }
      */
+
 }

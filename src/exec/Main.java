@@ -9,9 +9,7 @@ public class Main {
      */
     public static void main(String[] args) throws SQLException {
         Menu menu = new Menu();
-        menu.openConnection();
-        menu.createProgrammers();
-        menu.getProgrammers();
+        menu.printMenu();
     }
 
 }

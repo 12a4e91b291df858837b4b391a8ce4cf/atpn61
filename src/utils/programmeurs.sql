@@ -40,6 +40,9 @@ VALUES
 ("Lucas", "Nadia", "4848 Chemin des Aurores", "nlucas", "Serge Brin", "Photographie", 1980, 60000, 2500),
 ("Perrin", "Jean-Charles", "5050 Rue des Sapins", "jperrin", "Marie Curie", "Snowboard", 1988, 56000, 2100);
 
-SELECT * FROM PROGRAMME;
+SELECT * FROM PROGRAMMEUR;
 
-Select * FROM PROFRAMME WHERE ID = 5;
+SELECT * FROM PROGRAMMEUR WHERE ID = 5; #test de selection
+
+DELETE FROM PROGRAMMEUR WHERE ID = 5; #test de suppression
+

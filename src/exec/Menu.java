@@ -39,6 +39,7 @@ public class Menu extends ActionsBDDImpl {
                 "7. Cette touche est réservée pour retourner sur le menu principal" + "\n\n" +
                 "Quel est votre choix ? : ");
     }
+
     private void makeAChoice(int choice) throws SQLException {
         switch(choice) {
             case 1:
@@ -46,10 +47,13 @@ public class Menu extends ActionsBDDImpl {
                 break;
             case 2:
                 System.out.println("Id du programmeur à afficher");
-                int idChoice = sc.nextInt();
-                choiceTwo(idChoice);
+                int idChoiceAdd = sc.nextInt();
+                choiceTwo(idChoiceAdd);
                 break;
             case 3:
+                System.out.println("Id du programmeur à supprimer");
+                int idChoiceDelete = sc.nextInt();
+                choiceThree(idChoiceDelete);
                 break;
             case 4:
                 break;
@@ -61,8 +65,7 @@ public class Menu extends ActionsBDDImpl {
     }
     private void choiceOne() throws SQLException {
         super.getProgrammers();
-        if (returnToMainMenu())
-            printMenu();
+        askToReturnToMainMenu();
     }
 
     private void choiceTwo(int choice) throws SQLException {
@@ -77,8 +80,22 @@ public class Menu extends ActionsBDDImpl {
             }
         }
 
-        if (returnToMainMenu())
-            printMenu();
+        askToReturnToMainMenu();
+    }
+
+    private void choiceThree(int choice) throws SQLException {
+        boolean continueAskingValidId = true;
+
+        while(continueAskingValidId) {
+            if(super.deleteProgrammerById(choice)) {
+                continueAskingValidId = false;
+            } else {
+                System.out.println("Suppression KO. Saisissez à nouveau l'id :");
+                choice = sc.nextInt();
+            }
+        }
+
+        askToReturnToMainMenu();
     }
 
     private void choiceSix() {
@@ -86,51 +103,18 @@ public class Menu extends ActionsBDDImpl {
     }
 
     private boolean returnToMainMenu() {
-        System.out.println("Appuyez sur 7 pour revenir au menu principal ou sur n'importe quelle autre touche pour continuer.");
+        System.out.println("Appuyez sur 7 pour revenir au menu principal ou sur n'importe quelle autre touche pour " +
+                "quitter le programme.");
         int input = sc.nextInt();
         return input == 7;
     }
 
-    /*
-    private static ArrayList<Developpeur> listeDeveloppeurs = new ArrayList<>();
-    private static Scanner sc = new Scanner(System.in);
-    private static Connection conn;
-
-    /**
-     * Ouvre une connexion à la base de données.
-     * @throws SQLException Si une exception SQL est levée.
-     */
-
-    /*
-    public static void openConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/APTN61_BD";
-        String user = "root";
-        String password = "root";
-        conn = DriverManager.getConnection(url, user, password);
-    }
-    /**
-     * Récupère tous les programmeurs.sql à partir de la DB, puis les stocke dans l'ArrayList "ListeProgrammeurs".
-     * @throws SQLException Si une exception SQL est levée.
-     */
-
-    /*
-    public static void getProgrammers() throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(Constantes.requeteDeSelectionDesProgrammeurs);
-        while (rs.next()) {
-            int id = rs.getInt("ID");
-            String nom = rs.getString("NOM");
-            String prenom = rs.getString("PRENOM");
-            String adresse = rs.getString("ADRESSE"); // Assurez-vous que ce champ existe dans votre table SQL
-            String hobby = rs.getString("HOBBY"); // Assurez-vous que ce champ existe dans votre table SQL
-            int anNaissance = rs.getInt("ANNAISSANCE");
-            float salaire = rs.getFloat("SALAIRE");
-            float prime = rs.getFloat("PRIME");
-
-            Developpeur dev = new Developpeur(id, nom, prenom, adresse, hobby, anNaissance, salaire, prime);
-            listeDeveloppeurs.add(dev);
+    private void askToReturnToMainMenu() throws SQLException {
+        if (returnToMainMenu()) {
+            printMenu();
+        } else {
+            System.exit(0);
         }
     }
-     */
 
 }

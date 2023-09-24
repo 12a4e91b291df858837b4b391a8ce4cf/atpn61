@@ -7,4 +7,5 @@ public interface ActionsBDD {
      public void flushDb() throws SQLException;
      public  void getProgrammers() throws SQLException;
      public boolean getProgrammerById(int id) throws SQLException;
+     public boolean deleteProgrammerById(int id) throws SQLException;
 }

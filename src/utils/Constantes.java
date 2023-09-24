@@ -32,4 +32,5 @@ public class Constantes {
 
     public static final String requeteFlushDb = "TRUNCATE TABLE PROGRAMMEUR";
 
+    public static final String requeteDeSuppression = "DELETE FROM PROGRAMMEUR";
 }

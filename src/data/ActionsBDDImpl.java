@@ -30,7 +30,7 @@ public class ActionsBDDImpl implements ActionsBDD {
     @Override
     public void createProgrammers() throws SQLException {
         Statement stmt = conn.createStatement();
-        int rowsAffected = stmt.executeUpdate(Constantes.requeteInsertionJeuDeDonnee); // Utilisez executeUpdate() ici
+        int rowsAffected = stmt.executeUpdate(Constantes.requeteInsertionJeuDeDonnee);
         System.out.println(rowsAffected + " lignes insérées.");
         ResultSet rs = stmt.executeQuery(Constantes.requeteDeSelectionDesProgrammeurs);
         while (rs.next()) {
@@ -85,6 +85,22 @@ public class ActionsBDDImpl implements ActionsBDD {
                     System.out.println(displayProgammer);
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteProgrammerById(int id) throws SQLException {
+        String query = Constantes.requeteDeSuppression + " WHERE ID = ? ";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1,id);
+        pstmt.executeUpdate();
+        for(Developpeur d : listeDeveloppeurs) {
+            if(d.getId() == id) {
+                listeDeveloppeurs.remove(d);
+                System.out.println("SUPPRESSION REUSSIE");
+                return true;
             }
         }
         return false;

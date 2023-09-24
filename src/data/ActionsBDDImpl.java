@@ -23,6 +23,10 @@ public class ActionsBDDImpl implements ActionsBDD {
         conn = DriverManager.getConnection(url, user, password);
     }
 
+    /**
+     * Récupère tous les programmeurs.sql à partir de la DB, puis les stocke dans l'ArrayList "ListeProgrammeurs".
+     * @throws SQLException Si une exception SQL est levée.
+     */
     @Override
     public void createProgrammers() throws SQLException {
         Statement stmt = conn.createStatement();
@@ -50,31 +54,18 @@ public class ActionsBDDImpl implements ActionsBDD {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(Constantes.requeteFlushDb);
     }
-    /**
-     * Récupère tous les programmeurs.sql à partir de la DB, puis les stocke dans l'ArrayList "ListeProgrammeurs".
-     * @throws SQLException Si une exception SQL est levée.
-     */
+
     @Override
-    public void getProgrammers() throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(Constantes.requeteDeSelectionDesProgrammeurs);
-        while (rs.next()) {
-            int id = rs.getInt("ID");
-            String nom = rs.getString("NOM");
-            String prenom = rs.getString("PRENOM");
-            String adresse = rs.getString("ADRESSE");
-            String responsable = rs.getString("RESPONSABLE");
-            String hobby = rs.getString("HOBBY");
-            int anNaissance = rs.getInt("ANAISSANCE");
-            float salaire = rs.getFloat("SALAIRE");
-            float prime = rs.getFloat("PRIME");
-
-            Developpeur dev = new Developpeur(id, nom, prenom, adresse, responsable, hobby, anNaissance, salaire, prime);
-            listeDeveloppeurs.add(dev);
+    public void getProgrammers() {
+        String displayResult = "";
+        for (Developpeur d : listeDeveloppeurs) {
+            displayResult += "Id : " + d.getId() + " \nNom : " + d.getNom() + " \nPrenom : " + d.getPrenom()+ " \nAdresse : "
+                    + d.getAdresse() + "\nResponsable : " + d.getResponsable() + "\nHobby : " + d.getHobby() + " \nNaissance : "
+                    + d.getaNaissance() + " \nSalaire : " + d.getSalaire()+ " \nPrime : " + d.getPrime() + "\n"
+                    + "-------------------------------------------------------------------- \n";
         }
-        System.out.println(listeDeveloppeurs);
+        System.out.println(displayResult);
     }
-
 
     @Override
     public boolean getProgrammerById(int id) throws SQLException {
@@ -82,11 +73,16 @@ public class ActionsBDDImpl implements ActionsBDD {
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, id);
         ResultSet rs = pstmt.executeQuery();
+        String displayProgammer = "";
         if(rs.next()) {
             int devId = rs.getInt("ID");
             for(Developpeur d : listeDeveloppeurs) {
                 if(d.getId() == devId) {
-                    System.out.println(d);
+                    displayProgammer += "Id : " + d.getId() + " \nNom : " + d.getNom() + " \nPrenom : " + d.getPrenom()+ " \nAdresse : "
+                            + d.getAdresse() + "\nResponsable : " + d.getResponsable() + "\nHobby : " + d.getHobby() + " \nNaissance : "
+                            + d.getaNaissance() + " \nSalaire : " + d.getSalaire()+ " \nPrime : " + d.getPrime() + "\n"
+                            + "-------------------------------------------------------------------- \n";
+                    System.out.println(displayProgammer);
                     return true;
                 }
             }

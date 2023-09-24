@@ -1,65 +1,63 @@
 package exec;
 import data.ActionsBDDImpl;
-import data.Developpeur;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Scanner;
-import utils.Constantes;
 
 public class Menu extends ActionsBDDImpl {
     private Scanner sc = new Scanner(System.in);
 
-    private void dbConnectionAndInitialization() throws SQLException {
+    public void dbConnectionAndInitialization() throws SQLException {
         super.openConnection();
         super.flushDb();
         super.createProgrammers();
     }
     public void printMenu() throws SQLException {
-        dbConnectionAndInitialization();
-
         int choice;
-        boolean validInput;
 
-        do {
-            System.out.println("<<<<<<<<<<   MENU   >>>>>>>>>>" + "\n\n" +
-                    "1. Afficher tous les programmeurs" + "\n\n" +
-                    "2. Afficher un programmeur" + "\n\n" +
-                    "3. Supprimer un programmeur" + "\n\n" +
-                    "4. Ajouter un programmeur" + "\n\n" +
-                    "5. Modifier le salaire" + "\n\n" +
-                    "6. Quitter le programme" + "\n\n" +
-                    "7. Cette touche est réservée pour retourner sur le menu principal" + "\n\n" +
-                    "Quel est votre choix ? : ");
-
+        while(true) {
+            displayMenu();
             choice = sc.nextInt();
-            validInput = true;
 
-            switch(choice) {
-                case 1:
-                    choiceOne();
-                    break;
-                case 2:
-                    System.out.println("Id du programmeur à afficher");
-                    int idChoice = sc.nextInt();
-                    choiceTwo(idChoice);
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    choiceSix();
-
-                default:
-                    System.out.println("ERREUR! Veuillez saisir un nombre entre 1 et 6");
-                    validInput = false;
-                    break;
+            while (choice < 1 || choice > 6) {
+                System.out.println("ERREUR! Veuillez saisir un nombre entre 1 et 6");
+                choice = sc.nextInt();
             }
-        } while(!validInput);
 
+            makeAChoice(choice);
+        }
+    }
+
+    private void displayMenu() {
+        System.out.println("<<<<<<<<<<   MENU   >>>>>>>>>>" + "\n\n" +
+                "1. Afficher tous les programmeurs" + "\n\n" +
+                "2. Afficher un programmeur" + "\n\n" +
+                "3. Supprimer un programmeur" + "\n\n" +
+                "4. Ajouter un programmeur" + "\n\n" +
+                "5. Modifier le salaire" + "\n\n" +
+                "6. Quitter le programme" + "\n\n" +
+                "7. Cette touche est réservée pour retourner sur le menu principal" + "\n\n" +
+                "Quel est votre choix ? : ");
+    }
+    private void makeAChoice(int choice) throws SQLException {
+        switch(choice) {
+            case 1:
+                choiceOne();
+                break;
+            case 2:
+                System.out.println("Id du programmeur à afficher");
+                int idChoice = sc.nextInt();
+                choiceTwo(idChoice);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                choiceSix();
+        }
     }
     private void choiceOne() throws SQLException {
         super.getProgrammers();
@@ -74,7 +72,7 @@ public class Menu extends ActionsBDDImpl {
             if(super.getProgrammerById(choice)) {
                 continueAskingValidId = false;
             } else {
-                System.out.println("ID INVALIDE. Veuillez réessayer : ");
+                System.out.println("Recherche KO. Saisissez a nouveau l'id : ");
                 choice = sc.nextInt();
             }
         }

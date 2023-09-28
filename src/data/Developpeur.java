@@ -58,5 +58,7 @@ public class Developpeur {
     public float getPrime() {
         return this.prime;
     }
-
+    public void setSalaire(float salaire) {
+        this.salaire = salaire;
+    }
 }

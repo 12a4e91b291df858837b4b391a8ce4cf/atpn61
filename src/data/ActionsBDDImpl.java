@@ -106,4 +106,64 @@ public class ActionsBDDImpl implements ActionsBDD {
         return false;
     }
 
+    @Override
+    public void addProgrammers(String nom,String prenom, String adresse, String pseudo,
+                                  String responsable, String hobby, int anNaissance,
+                                  int salaire, int prime) {
+        String query = Constantes.requeteInsertion + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, prenom);
+            pstmt.setString(3,adresse);
+            pstmt.setString(4, pseudo);
+            pstmt.setString(5, responsable);
+            pstmt.setString(6, hobby);
+            pstmt.setInt(7, anNaissance);
+            pstmt.setInt(8, salaire);
+            pstmt.setInt(9, prime);
+
+            pstmt.executeUpdate();
+
+            int id = listeDeveloppeurs.size() + 1;
+            Developpeur dev = new Developpeur(id, nom, prenom, adresse, responsable, hobby, anNaissance, salaire, prime);
+            listeDeveloppeurs.add(dev);
+            System.out.println("AJOUT REUSSI");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean doesProgrammeurExist(int id) {
+        try {
+            String query = "SELECT 1 FROM programmeur WHERE ID = ? LIMIT 1";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public boolean modifySalaryById (int id, float Salaire) throws SQLException{
+    String query ="UPDATE programmeur SET SALAIRE = ? WHERE ID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setFloat(1,Salaire);
+        pstmt.setInt(2, id);
+
+        int rowsUpdated = pstmt.executeUpdate();
+        for(Developpeur dev : listeDeveloppeurs) {
+            if(dev.getId() == id) {
+                dev.setSalaire(Salaire);
+                System.out.println("MODIFICATION REUSSIE");
+            }
+        }
+        return rowsUpdated>0;
+    }
+
 }

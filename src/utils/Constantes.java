@@ -33,4 +33,7 @@ public class Constantes {
     public static final String requeteFlushDb = "TRUNCATE TABLE PROGRAMMEUR";
 
     public static final String requeteDeSuppression = "DELETE FROM PROGRAMMEUR";
+
+    public static final String requeteInsertion = "INSERT INTO PROGRAMMEUR (NOM, PRENOM, ADRESSE, PSEUDO, RESPONSABLE, HOBBY, ANAISSANCE, SALAIRE, PRIME)";
+
 }

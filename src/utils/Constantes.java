@@ -28,7 +28,7 @@ public class Constantes {
             "(\"Lucas\", \"Nadia\", \"4848 Chemin des Aurores\", \"nlucas\", \"Serge Brin\", \"Photographie\", 1980, 60000, 2500),\n" +
             "(\"Perrin\", \"Jean-Charles\", \"5050 Rue des Sapins\", \"jperrin\", \"Marie Curie\", \"Snowboard\", 1988, 56000, 2100);";
 
-    public static final String requeteDeSelectionDesProgrammeurs = "Select * FROM PROGRAMMEUR";
+    public static final String requeteDeSelectionDesProgrammeurs = "SELECT * FROM PROGRAMMEUR";
 
     public static final String requeteFlushDb = "TRUNCATE TABLE PROGRAMMEUR";
 

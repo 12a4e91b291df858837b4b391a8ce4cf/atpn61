@@ -17,7 +17,7 @@ public class Menu {
         int choice;
 
         while(true) {
-            displayMenu();
+            System.out.println(displayMenu());
             choice = sc.nextInt();
 
             while (choice < 1 || choice > 6) {
@@ -28,8 +28,8 @@ public class Menu {
         }
     }
 
-    private void displayMenu() {
-        System.out.println("<<<<<<<<<<   MENU   >>>>>>>>>>" + "\n\n" +
+    public String displayMenu() {
+        return "<<<<<<<<<<   MENU   >>>>>>>>>>" + "\n\n" +
                 "1. Afficher tous les programmeurs" + "\n\n" +
                 "2. Afficher un programmeur" + "\n\n" +
                 "3. Supprimer un programmeur" + "\n\n" +
@@ -37,7 +37,7 @@ public class Menu {
                 "5. Modifier le salaire" + "\n\n" +
                 "6. Quitter le programme" + "\n\n" +
                 "7. Cette touche est réservée pour retourner sur le menu principal" + "\n\n" +
-                "Quel est votre choix ? : ");
+                "Quel est votre choix ? : ";
     }
 
     private void makeAChoice(int choice) throws SQLException {

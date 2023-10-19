@@ -4,13 +4,15 @@ import utils.Constantes;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+
 
 public class ActionsBDDImpl implements ActionsBDD {
-    private static ArrayList<Developpeur> listeDeveloppeurs = new ArrayList<>();
-    private static Connection conn;
+    static ArrayList<Developpeur> listeDeveloppeurs = new ArrayList<>();
+    public static Connection conn;
 
+    public static ArrayList<Developpeur> getListDevelopper() {
+        return listeDeveloppeurs;
+    }
     /**
      * Ouvre une connexion à la base de données.
      * @throws SQLException Si une exception SQL est levée.
@@ -133,6 +135,7 @@ public class ActionsBDDImpl implements ActionsBDD {
         }
     }
 
+    @Override
     public boolean doesProgrammeurExist(int id) {
         try {
             String query = "SELECT 1 FROM programmeur WHERE ID = ? LIMIT 1";

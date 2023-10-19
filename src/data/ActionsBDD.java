@@ -1,5 +1,8 @@
 package data;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import static data.ActionsBDDImpl.listeDeveloppeurs;
 
 public interface ActionsBDD {
      public void openConnection() throws SQLException;
@@ -14,4 +17,8 @@ public interface ActionsBDD {
      public boolean modifySalaryById(int id , float Salaire) throws SQLException;
 
      public boolean doesProgrammeurExist(int id) throws SQLException;
+
+     public static ArrayList<Developpeur> getListDevelopper() {
+          return listeDeveloppeurs;
+     }
 }
